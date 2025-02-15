@@ -11,4 +11,9 @@ Desenvolvimento de um bot automatizado que realiza consultas em tempo real à pl
 
 ## Webpage com os dados de Cripto entre BTC / USDT.
 
-![Image](https://github.com/user-attachments/assets/a9cab085-9fdc-48e4-8c52-eb84041fd42e)
+### Clique no link abaixo e visualize os valores em tempo real!! 
+👇👇👇👇👇
+
+[![Image](https://github.com/user-attachments/assets/a9cab085-9fdc-48e4-8c52-eb84041fd42e)
+](https://caioassis-dev.github.io/bot_cripto/)
+
