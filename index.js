@@ -1,5 +1,6 @@
 
-const axios = require("axios");
+// removi esse trecho pois na pagina front-end já estou importando, deixar isso ativo so se for rodar em back-end.
+// const axios = require("axios");
 
 const period = 14;
 const symbol = "BTCUSDT";
@@ -16,10 +17,10 @@ function averages(prices, period, startIndex){
         }else{
             losses += Math.abs(diff);
         }
-        let avgGains = gains / period;
-        let avgLosses = losses / period;
-        return { avgGains, avgLosses}
     }
+    let avgGains = gains / period;
+    let avgLosses = losses / period;
+    return { avgGains, avgLosses}
 }
 
 function RSI(prices, period){
@@ -53,27 +54,40 @@ async function start() {
     const lastCandle = data[data.length -1]
     const lastPrice = parseFloat(lastCandle[4]);
 
-
-    console.clear();
-    console.log(`Price: ${lastPrice}`)
-
     const prices = data.map(k => parseFloat(k[4]));
-    const rsi = RSI(prices,period);
-    console.log(`RSI: ${rsi}`)
+    const rsi = parseFloat(RSI(prices,period)).toFixed(2);
+
+    document.getElementById("rsi").innerText = `$${rsi}`;
+    document.getElementById("price").innerText = `$${lastPrice}`;
+    
+    let actionText = "WAIT";
+    let buy = "oversold, It's time to BUY!!"
+    let sell = "overbought, It's time to SELL!!"
 
 
-    if(rsi <= 30 && position === false){
-        console.log("oversold, It's time to BUY!!")
-        position = true;
-    }else if(rsi >= 70 && position === true){
-        console.log("overbought, It's time to SELL!!")
-        position = false;
+    if(rsi <= 48){
+        actionText = buy
+    }else if(rsi >= 58){
+        actionText = sell
     }else{
-        console.log("wait")
+        actionText = "WAIT"
     }
+
+    document.getElementById("action").innerText = actionText;
+
+    let card = document.querySelector(".card");
+    if(actionText == buy){
+        card.classList.remove("text-bg-danger", "text-bg-warning");
+        card.classList.add("text-bg-sucess")
+    } else if (actionText === sell) {
+        card.classList.remove("text-bg-success", "text-bg-warning");
+        card.classList.add("text-bg-danger");
+    } else {
+        card.classList.remove("text-bg-success", "text-bg-danger");
+        card.classList.add("text-bg-warning");
+    }
+
 }
-
-
 
 // start it is the begin and the 3000 é miliseconds it is 3 seconds.
 setInterval(start, 3000);
